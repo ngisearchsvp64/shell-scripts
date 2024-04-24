@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: LGPL-3-or-later
+# Copyright 2023-2024 VectorCamp
+# Copyright 2023-2024 Red Semiconductor Ltd.
+# Copyright 2023-2024 VanTosh
+#
+# Funded by NGI Search Programme HORIZON-CL4-2021-HUMAN-01 2022,
+# https://www.ngisearch.eu/, EU Programme 101069364.
+
+if [ "$EUID" -eq 0 ]; then
+  echo "Please run as a normal user!"
+  echo "This script is NOT intended to run as root."
+  exit
+fi
+
+echo "Please run tho following scripts beforehand:"
+echo "install-hdl-apt-reqs"
+
+mkdir -p /home/$USER/src/
+cd /home/$USER/src/
+
+# Copy repo
+git clone https://github.com/ngisearchsvp64/documentation.git
+cd documentation
+make
+
+echo "Documentation ready, pdf built."
