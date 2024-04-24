@@ -14,7 +14,7 @@ if [ "$EUID" -eq 0 ]; then
   exit
 fi
 
-echo "Please run tho following scripts beforehand:"
+echo "Please run the following scripts beforehand:"
 echo "install-hdl-apt-reqs"
 echo "binutils-gdb-install"
 echo "hdl-dev-repos"
