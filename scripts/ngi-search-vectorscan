@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: LGPL-3-or-later
+# Copyright 2024 VectorCamp
+# Copyright 2024 Red Semiconductor Ltd.
+# Copyright 2024 VanTosh
+#
+# Funded by NGI Search Programme HORIZON-CL4-2021-HUMAN-01 2022,
+# https://www.ngisearch.eu/, EU Programme 101069364.
+
+if [ "$EUID" -eq 0 ]; then
+  echo "Please run as a normal user!"
+  echo "This script is NOT intended to run as root."
+  exit
+fi
+
+echo "Please run the following scripts beforehand:"
+echo "install-hdl-apt-reqs"
+
+mkdir -p /home/$USER/src/
+cd /home/$USER/src/
+git clone git@github.com:ngisearchsvp64/vectorscan.git
+cd vectorscan
+
+git branch svp64-port
+mkdir build
+cd build
+# TODO: currently chroot cmake version too old (3.18.4 required, 3.13.4 present)
+cmake -DSVP64=on ../
+make -j $(($(nproc) - 1)) VERBOSE=1
